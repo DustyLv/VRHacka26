@@ -135,3 +135,7 @@ MonoBehaviour:
   neededScaleMin: 0
   neededScaleMax: 2
   types: 00000000010000000200000003000000
+  car: {fileID: 0}
+  audios:
+  - {fileID: 8300000, guid: 7df298c627e45384dadac8bd37f35704, type: 3}
+  - {fileID: 8300000, guid: ef8ff7c5e151ad14ca058f0772ddf074, type: 3}

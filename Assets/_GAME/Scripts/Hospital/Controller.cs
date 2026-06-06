@@ -1,6 +1,7 @@
 using System;
 
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Assets._GAME.Scripts.Hospital
 {
@@ -13,6 +14,8 @@ namespace Assets._GAME.Scripts.Hospital
         public int neededScaleMin;
         public int neededScaleMax;
         public OrganType[] types = { OrganType.Brains, OrganType.Heart, OrganType.Intestines, OrganType.Lungs };
+        public AudioSource car;
+        public AudioClip[] audios;
 
         private void Start()
         {
@@ -33,6 +36,11 @@ namespace Assets._GAME.Scripts.Hospital
             if (!current.Collect(type)) return false;
             if (!current.IsDone()) return false;
             questsDone++;
+            if (audios.Length > 0)
+            {
+                car.generator = audios[UnityEngine.Random.Range(0, audios.Length)];
+                car.Play();
+            }
             GenerateQuest();
             return true;
         }

@@ -700,6 +700,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hospital
       objectReference: {fileID: 0}
+    - target: {fileID: 1616397837216013071, guid: 0c82abf6af2a3014998bcca190acf18e, type: 3}
+      propertyPath: car
+      value: 
+      objectReference: {fileID: 6016619561524649040}
     - target: {fileID: 2373728919318883972, guid: 0c82abf6af2a3014998bcca190acf18e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -856,6 +860,11 @@ PrefabInstance:
 --- !u!4 &6016619561524649037 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5267031195257032740, guid: c8bc31786c0a21246ae271544e7d2eaf, type: 3}
+  m_PrefabInstance: {fileID: 6016619561524649036}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &6016619561524649040 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2187878642851939446, guid: c8bc31786c0a21246ae271544e7d2eaf, type: 3}
   m_PrefabInstance: {fileID: 6016619561524649036}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &8106986355313930113
