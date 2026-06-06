@@ -22,7 +22,7 @@ namespace Assets._GAME.Scripts.Car
             car.AddForceAtPosition(acceleration * input * location.forward, location.position, ForceMode.Acceleration);
         }
 
-        private readonly void Decelerate() => car.AddForceAtPosition((Input.GetKey(KeyCode.Space) ? brakeDeceleration : deceleration) * Mathf.Abs(velocityRatio) * -location.forward, location.position, ForceMode.Acceleration);
+        private readonly void Decelerate(float input) => car.AddForceAtPosition(Mathf.Lerp(deceleration, brakeDeceleration, input) * Mathf.Abs(velocityRatio) * -location.forward, location.position, ForceMode.Acceleration);
 
         private void SetVelocityRatio()
         {
@@ -30,10 +30,10 @@ namespace Assets._GAME.Scripts.Car
             velocityRatio = velocity.z / maxSpeed;
         }
 
-        public void Run(float input)
+        public void Run(float gasInput, float brakeInput)
         {
-            Accelerate(input);
-            Decelerate();
+            Accelerate(gasInput);
+            Decelerate(brakeInput);
             SetVelocityRatio();
         }
     }

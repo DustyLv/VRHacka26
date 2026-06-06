@@ -15,19 +15,13 @@ namespace Assets._GAME.Scripts.Car
         private void FixedUpdate()
         {
             if (wheelController == null || !wheelController.IsConnected) return;
-            
-            float vertical = Input.GetAxis("Vertical");
-            float horizontal = Input.GetAxis("Horizontal");
-            
             float steerInput = wheelController.Steering;
-            float gasInput = wheelController.Throttle;
+            float gasInput = wheelController.Throttle * 2 - 1;
             float brakeInput = wheelController.Brake;
-            
-            
-            suspension.ApplySpringForce(vertical);
+            suspension.ApplySpringForce(gasInput);
             if (!suspension.grounded) return;
-            engine.Run(vertical);
-            steering.Apply(horizontal, engine);
+            engine.Run(gasInput, brakeInput);
+            steering.Apply(steerInput, brakeInput, engine);
         }
     }
 }

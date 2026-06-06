@@ -38,10 +38,10 @@ namespace Assets._GAME.Scripts.Car
 
         private readonly void ToggleSkidSound(bool on) => audioSkid.mute = !on;
 
-        public void Apply(float input, Engine engine)
+        public readonly void Apply(float steerInput, float brakeInput, Engine engine)
         {
             // only visual
-            float angle = maxAngle * input;
+            float angle = maxAngle * steerInput;
             foreach (Transform tire in tires)
             {
                 Vector3 angles = tire.localEulerAngles;
@@ -49,10 +49,10 @@ namespace Assets._GAME.Scripts.Car
             }
             // torque
             float ratio = engine.velocityRatio;
-            car.AddTorque(strength * input * turning.Evaluate(MathF.Abs(ratio)) * MathF.Sign(ratio) * car.transform.up, ForceMode.Acceleration);
+            car.AddTorque(strength * steerInput * turning.Evaluate(MathF.Abs(ratio)) * MathF.Sign(ratio) * car.transform.up, ForceMode.Acceleration);
             // drag
             float sideSpeed = engine.velocity.x;
-            float drag = -sideSpeed * (Input.GetKey(KeyCode.Space) ? brakeDragCoefficient : dragCoefficient);
+            float drag = -sideSpeed * Mathf.Lerp(dragCoefficient, brakeDragCoefficient, brakeInput);
             Vector3 dragForce = car.transform.right * drag;
             car.AddForceAtPosition(dragForce, car.worldCenterOfMass, ForceMode.Acceleration);
             // only visual
