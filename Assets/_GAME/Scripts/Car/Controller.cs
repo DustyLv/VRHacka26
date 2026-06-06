@@ -11,13 +11,26 @@ namespace Assets._GAME.Scripts.Car
         public Suspension suspension;
         public Engine engine;
         public Steering steering;
+        public bool debug;
 
         private void FixedUpdate()
         {
-            if (wheelController == null || !wheelController.IsConnected) return;
-            float steerInput = wheelController.Steering;
-            float gasInput = wheelController.Throttle * 2 - 1;
-            float brakeInput = wheelController.Brake;
+            if (!debug && (wheelController == null || !wheelController.IsConnected)) return;
+            float steerInput;
+            float gasInput;
+            float brakeInput;
+            if (debug)
+            {
+                steerInput = Input.GetAxis("Horizontal");
+                gasInput = Input.GetAxis("Vertical");
+                brakeInput = Input.GetKey(KeyCode.Space) ? 1 : 0;
+            }
+            else
+            {
+                steerInput = wheelController.Steering;
+                gasInput = wheelController.Throttle > 0.001 ? wheelController.Throttle : -wheelController.Brake;
+                brakeInput = wheelController.Brake;
+            }
             suspension.ApplySpringForce(gasInput);
             if (!suspension.grounded) return;
             engine.Run(gasInput, brakeInput);
