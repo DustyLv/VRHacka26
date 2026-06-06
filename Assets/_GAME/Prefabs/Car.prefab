@@ -10359,6 +10359,7 @@ GameObject:
   - component: {fileID: 5267031195257032740}
   - component: {fileID: 469196714499723608}
   - component: {fileID: 3183998733588642604}
+  - component: {fileID: 6911344080239639896}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -10423,6 +10424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 413a968ce3dd6fa439fc1618b1876f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._GAME.Scripts.Car.Controller
+  wheelController: {fileID: 6911344080239639896}
   suspension:
     car: {fileID: 469196714499723608}
     grounded: 0
@@ -10528,6 +10530,19 @@ MonoBehaviour:
     audioEngine: {fileID: 2955251480795261704}
     minAudioEnginePitch: 1
     maxAudioEnginePitch: 5
+--- !u!114 &6911344080239639896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5739868452895724763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99470c14f44520d4b998458d9d8d487a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::G27QuestController
+  DebugText: {fileID: 0}
 --- !u!1 &5761231069406106760
 GameObject:
   m_ObjectHideFlags: 0
