@@ -20,9 +20,11 @@ namespace Assets._GAME.Scripts.AI
 
         public List<Transform> points;
         public List<Pair> lines;
-        public float closeEnought = 5;
-        public float acceleration = 10;
+        public float closeEnought;
+        public float acceleration;
+        public float spinTime;
         public Rigidbody body;
+        public Transform prey;
 
         private void BuildConnections()
         {
@@ -50,8 +52,8 @@ namespace Assets._GAME.Scripts.AI
                 closestPoint = point;
             }
             targetPoint = points.IndexOf(closestPoint) + 1;
-            Debug.Log($"{targetPoint} {closestPoint} {closestDistance}");
-            Debug.DrawLine(transform.position, closestPoint.position, Color.green, float.MaxValue);
+            // Debug.Log($"{targetPoint} {closestPoint} {closestDistance}");
+            // Debug.DrawLine(transform.position, closestPoint.position, Color.green, float.MaxValue);
         }
 
         private void ConnectedPoint()
@@ -64,15 +66,33 @@ namespace Assets._GAME.Scripts.AI
             }
             previousPoint = targetPoint;
             targetPoint = possibilities[UnityEngine.Random.Range(0, possibilities.Count)];
-            Debug.DrawLine(transform.position, points[previousPoint - 1].position, Color.blue, float.MaxValue);
-            Debug.DrawLine(transform.position, points[targetPoint - 1].position, Color.green, float.MaxValue);
+            // Debug.DrawLine(transform.position, points[previousPoint - 1].position, Color.blue, float.MaxValue);
+            // Debug.DrawLine(transform.position, points[targetPoint - 1].position, Color.green, float.MaxValue);
+        }
+
+        private void PreyPoint()
+        {
+            if (!connections.TryGetValue(targetPoint, out List<int> possibilities)) return;
+            previousPoint = targetPoint;
+            float closestDistance = float.MaxValue;
+            Transform closestPoint = null;
+            foreach (int possibility in possibilities)
+            {
+                Transform point = points[possibility - 1].transform;
+                float distance = Vector3.Distance(point.position, prey.position);
+                if (distance > closestDistance) continue;
+                closestDistance = distance;
+                closestPoint = point;
+            }
+            targetPoint = points.IndexOf(closestPoint) + 1;
         }
 
         private void NextTarget()
         {
             if (points.Count <= 0) return;
             if (targetPoint <= 0) ClosestPoint();
-            else ConnectedPoint();
+            else if (prey == null) ConnectedPoint();
+            else PreyPoint();
         }
 
         private void Start()
@@ -93,9 +113,9 @@ namespace Assets._GAME.Scripts.AI
             if (points.Count <= 0 || targetPoint <= 0) return;
             if (TargetReached()) NextTarget();
             Transform target = points[targetPoint - 1];
-            Vector3 force = target.position - transform.position;
-            force.Normalize();
-            body.AddForceAtPosition(force * acceleration, target.position, ForceMode.Impulse);
+            Vector3 force = (target.position - transform.position).normalized;
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(force), Time.fixedDeltaTime * spinTime);
+            body.AddForceAtPosition(force * acceleration, target.position, ForceMode.Acceleration);
         }
     }
 }
