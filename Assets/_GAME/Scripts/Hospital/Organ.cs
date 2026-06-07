@@ -6,10 +6,10 @@ namespace Assets._GAME.Scripts.Hospital
 {
     public enum OrganType
     {
-        Brains,
-        Heart,
-        Intestines,
-        Lungs,
+        Brains = 0,
+        Heart = 1,
+        Intestines = 2,
+        Lungs = 3,
     }
 
     public class Organ : MonoBehaviour

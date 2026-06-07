@@ -23,6 +23,7 @@ namespace Assets._GAME.Scripts.Hospital
             if (type != this.type) return false;
             got++;
             Debug.Log($"{got}/{needed} {type}");
+            Controller.instance.questText.text = $"{got}/{needed} {type}";
             return true;
         }
 

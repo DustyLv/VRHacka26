@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayBloodSplatter : MonoBehaviour
 {
     public ParticleSystem bloodSplatter;
+    public AudioSource bloodSplatterAudioSource;
     
     public static PlayBloodSplatter instance;
 
@@ -17,5 +18,7 @@ public class PlayBloodSplatter : MonoBehaviour
     public void Play()
     {
         bloodSplatter.Play();
+        bloodSplatterAudioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        bloodSplatterAudioSource.Play();
     }
 }

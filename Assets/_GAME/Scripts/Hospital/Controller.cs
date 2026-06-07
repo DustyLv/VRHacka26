@@ -1,5 +1,5 @@
 using System;
-
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -16,6 +16,14 @@ namespace Assets._GAME.Scripts.Hospital
         public OrganType[] types = { OrganType.Brains, OrganType.Heart, OrganType.Intestines, OrganType.Lungs };
         public AudioSource car;
         public AudioClip[] audios;
+        public TextMeshProUGUI questText;
+        
+        public static Controller instance;
+        
+        private void Awake()
+        {
+            instance = this;
+        }
 
         private void Start()
         {
@@ -29,6 +37,9 @@ namespace Assets._GAME.Scripts.Hospital
             needed += UnityEngine.Random.Range(questsDone * neededScaleMin, questsDone * neededScaleMax);
             current = new Quest(type, needed);
             Debug.Log($"{needed} {type}");
+            car.clip = audios[UnityEngine.Random.Range(0, audios.Length)];
+            car.Play();
+            questText.text = $"New task! <br> {needed} {type}";
         }
 
         public bool Collect(OrganType type)
