@@ -17,10 +17,14 @@ public class NPC : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Instantiate(splatterParticles, transform.position + (Vector3.up * 1.5f), Quaternion.identity);
-        PlayBloodSplatter.instance.Play();
-        GlobalAudioPlayer.instance.PlayAudioNPCHit();
-        int organType = Random.Range(0, 3);
-        Controller.instance.Collect((OrganType)organType);
+        if (other.CompareTag("Player"))
+        {
+            PlayBloodSplatter.instance.Play();
+            GlobalAudioPlayer.instance.PlayAudioNPCHit();
+            int organType = Random.Range(0, 4);
+            Controller.instance.Collect((OrganType)organType);
+        }
+
         NPCSpawner.instance.SpawnNPCRandom();
         Destroy(gameObject);
 
